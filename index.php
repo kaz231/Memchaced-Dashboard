@@ -6,6 +6,14 @@
 * @version 0.1.1
 * @author Ohad Raz <admin@bainternet.info>
 */
+
+$configFile = dirname(__FILE__).'/config.php';
+if (!file_exists($configFile)) {
+   throw new \Exception('File config.php does not exist. Execute "cp config.php.dist config.php" and provide configuration of Memcached.');
+}
+
+$config = require $configFile;
+
 class Simple_memchached_dashboard{
 	public $memcache = null;
 	public $list     = null;
@@ -581,4 +589,4 @@ class Simple_memchached_dashboard{
 		<?php
 	}
 }//end class
-new Simple_memchached_dashboard();
+new Simple_memchached_dashboard($config['host'], $config['port'], $config['users']);
